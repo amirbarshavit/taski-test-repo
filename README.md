@@ -1,34 +1,33 @@
-# test
+# Taski
 
-A short description of what this project does and the problem it solves.
+Taski is a lightweight task management application that helps teams track, prioritize, and complete work items efficiently. It streamlines project workflows by providing a simple interface for creating and managing tasks across multiple projects.
 
 ## Installation
 
 Clone the repository and install dependencies:
 
 ```bash
-git clone https://github.com/your-username/test.git
-cd test
-```
-
-Install dependencies (update this command to match your stack):
-
-```bash
-# Node.js
-npm install
-
-# Python
+git clone https://github.com/amirbarshavit/taski.git
+cd taski
 pip install -r requirements.txt
 ```
 
 ## Usage
 
-Run the project with:
+Run the application with:
 
 ```bash
-# Node.js
-npm start
-
-# Python
 python main.py
 ```
+
+## Configuration
+
+Taski can be configured via environment variables or a `.env` file in the project root. Refer to `.env.example` for available options.
+
+## Contributing
+
+Pull requests are welcome. Please open an issue first to discuss what you would like to change.
+
+## License
+
+MIT
