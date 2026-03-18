@@ -246,3 +246,87 @@ class TestReadmeQuality:
         assert "FIXME" not in readme_text(), (
             "README still contains FIXME placeholders."
         )
+
+
+# ---------------------------------------------------------------------------
+# Messi Section (RND-1)
+# ---------------------------------------------------------------------------
+
+
+def readme_messi_section() -> str:
+    """Return the content of the Messi section, or an empty string if absent."""
+    text = readme_text()
+    match = re.search(
+        r"##\s+.*[Mm]essi.*\n(.*?)(?=\n##|\Z)", text, re.DOTALL
+    )
+    return match.group(1).strip() if match else ""
+
+
+class TestMessiSection:
+    def test_readme_mentions_messi(self):
+        """README must mention Messi somewhere in its content."""
+        assert "Messi" in readme_text() or "messi" in readme_text().lower(), (
+            "README does not mention Messi at all. "
+            "Add a section or passage about Messi (RND-1)."
+        )
+
+    def test_has_messi_heading(self):
+        """README must contain a heading dedicated to Messi."""
+        headings = readme_headings()
+        messi_headings = [h for h in headings if "messi" in h.lower()]
+        assert messi_headings, (
+            "README has no heading that references Messi. "
+            "Add a '## Messi' (or similar) section."
+        )
+
+    def test_messi_section_is_not_empty(self):
+        """The Messi section must have body content, not just a heading."""
+        content = readme_messi_section()
+        assert content, (
+            "The Messi section exists but has no body text. "
+            "Write something substantive about Messi."
+        )
+
+    def test_messi_section_minimum_length(self):
+        """The Messi section should be at least 50 characters of real content."""
+        content = readme_messi_section()
+        assert len(content) >= 50, (
+            f"The Messi section is only {len(content)} character(s) long. "
+            "Write at least a short paragraph about Messi."
+        )
+
+    def test_messi_section_not_placeholder(self):
+        """The Messi section must not contain generic placeholder text."""
+        content = readme_messi_section().lower()
+        placeholders = ["lorem ipsum", "todo", "fixme", "write something here", "tbd"]
+        for placeholder in placeholders:
+            assert placeholder not in content, (
+                f"The Messi section still contains placeholder text: '{placeholder}'. "
+                "Replace it with real content."
+            )
+
+    def test_messi_section_mentions_messi_by_name(self):
+        """The Messi section body should refer to Messi by name (not just the heading)."""
+        content = readme_messi_section()
+        assert "messi" in content.lower() or "lionel" in content.lower(), (
+            "The Messi section body does not mention 'Messi' or 'Lionel' by name. "
+            "The content should reference him explicitly."
+        )
+
+    def test_messi_section_contains_real_fact(self):
+        """The Messi section should reference at least one real, specific fact about Messi.
+
+        Accepted keywords: goals, Argentina, Ballon d'Or / ballon, World Cup / worldcup,
+        Barcelona, Inter Miami / miami, champion, record, trophy, award.
+        """
+        content = readme_messi_section().lower()
+        fact_keywords = [
+            "goal", "argentina", "ballon", "world cup", "worldcup",
+            "barcelona", "miami", "champion", "record", "trophy", "award",
+        ]
+        matched = [kw for kw in fact_keywords if kw in content]
+        assert matched, (
+            "The Messi section doesn't appear to contain any recognisable facts about Messi. "
+            "Mention at least one of: goals, Argentina, Ballon d'Or, World Cup, "
+            "Barcelona, Inter Miami, championships, records, trophies, or awards."
+        )
